@@ -9,8 +9,7 @@ if (isset($_POST['correo']) && isset($_POST['clave'])) {
     $stmt->bind_param('ss', $_POST['correo'], $_POST['clave']);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
+    
         if (mysqli_num_rows($result) == 1) {
             $row = mysqli_fetch_assoc($result);
         }
@@ -28,7 +27,6 @@ if (isset($_POST['correo']) && isset($_POST['clave'])) {
         $_SESSION['error_message'] = "Error en la contraseña o correo electrónico";
 }
     
-}
 
 $conn->close();
 ?>
