@@ -11,7 +11,7 @@
     <title>CARCHEAP</title>
 </head>
 
-<body class="formulariose">
+<body class="formularioad">
         <!--Titulo Cabecera-->
         <section class="inicio" id="inicio">
             <header id="cabeceralogo">     
@@ -36,8 +36,8 @@
                 <li><a href="Misión_Visión.html">Misión y visión</a></li> 
                 <li><a href="vehiculos.html">Autos</a></li>
                 <li><a href="contacto.html">Contacto</a></li>   
-                <li class="caja-2"><a href="#">Iniciar sesión</a></li> 
-                <li><a href="Formulario_admin.html">Sesion administrador</a></li>     
+                <li class="caja-2"><a href="Formulario_sesion.html">Iniciar sesión</a></li>   
+                <li><a href="Formulario_sesion.html">Regresar</a></li>        
              </ul>                                  
         </div>   
         </nav> 
@@ -57,18 +57,21 @@
                     <a href="Iniciar_sesion.html">Iniciar sesión</a>
                 </nav>
             </head>
+
+    
         <main>
-          <!---Formulario de sesión--->
-                <section class="formf-register">
-                <form action="Index_cliente.html"> 
+          <!---Formulario de sesión de administrador--->
+            <section class="forma-register">
+                <form action="../php/validacion.php" method="post"> 
                 <h2>Iniciar sesión</h2> <br>
 
-                Correo electronico
-                <input class="controlf" type="email" placeholder="Correo electronico"><br><br>
-                Contraseña
-                <input class="controlf" type="password" placeholder="Contraseña"><br><br>
-                <input class="botonf" id="botonf" type="submit" value="Iniciar sesión"> <br><br>
-                <a href="Crear_cuenta.html">Crear cuenta</a>
+                <label for="correo">Correo electrónico:</label><br>
+                <input class="controlf" type="email" id="correo" name="correo"><br>
+                <label for="clave">Contraseña:</label><br>
+                <input class="controlf" type="password" id="clave" name="clave"><br><br>
+
+                <input class="botona" id="botonf" type="submit" value="Iniciar sesión"> <br><br>
+                <a href="../html/Crear_cuenta.php">Crear cuenta</a>
                 <br>
                 
                 <a href="Recuperar_cuenta.html">Recuperar contraseña</a>
@@ -83,7 +86,6 @@
  <br>
  <br>
  <br>
-
         <!--footer-->
 
         <footer id="contacto">

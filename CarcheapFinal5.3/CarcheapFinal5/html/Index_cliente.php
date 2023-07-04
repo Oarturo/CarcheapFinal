@@ -1,7 +1,31 @@
+<?php
+session_start();
 
+if (isset($_POST['correo']) && isset($_POST['clave'])) {
+    $db = new mysqli('localhost', 'root', '', 'carcheap');
+
+    $stmt = $db->prepare('SELECT nombreU, adm FROM usuarios WHERE correo = ? AND clave = ?');
+    $stmt->bind_param('ss', $_POST['correo'], $_POST['clave']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $_SESSION['correo'] = $_POST['correo'];
+        $_SESSION['nombreU'] = $row['nombreU'];
+        if ($row['adm']) {
+            header('Location: Index_admin.php');
+        } else {
+            header('Location: Index_cliente.php');
+        }
+        exit;
+    } else {
+        // El correo electrónico o la contraseña son incorrectos
+        // Manejar este caso como desees
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-    
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,16 +35,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="img/car.jpg">
     <title>CARCHEAP</title>
-    <script src="../js/contador-inactividad.js"></script>
 </head>
+
 <body>
-    <body onload="reiniciarContadorInactividad()">
         <!--Titulo Cabecera-->
         <section class="inicio" id="inicio">
             <header id="cabeceralogo">     
                 <div>       
                 <h1>CARCHEAP</h1>  
-                <h2>Conduce tus propios sueños</h2> 
+                <h2>Conduce tus propios sueños</h2>
                 </div>   
                 <nav>
                 <div class="Logo">
@@ -41,7 +64,7 @@
                 <li><a href="Contacto_cliente.html">Contacto</a></li>   
                 <li class="caja-2"><a href="../index.html">Cerrar sesión</a></li>     
              </ul>                                  
-        </div>   
+        </div>  
         </nav> 
 
     
@@ -63,9 +86,10 @@
             <!---BANNER--->
             <section class="bienvenidos" id="bienvenidos"></section>
             <div class="header">
-                <h1 class="titulo">Dedicados a la compra y venta de autos</h1>
+            <?php if (isset($_SESSION['nombreU'])): ?>
+                <p class="titulo">Bienvenido, <?= htmlspecialchars($_SESSION['nombreU']) ?>!</p>
+            <?php endif; ?> 
             </div>
-
 
         <main>
               <!---TARJETAS-->

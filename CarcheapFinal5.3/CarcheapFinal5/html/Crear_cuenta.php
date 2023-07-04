@@ -57,23 +57,52 @@
                     <a href="Iniciar_sesion.html">Iniciar sesión</a>
                 </nav>
             </head>
+            <main>
+                <div>
+                    <form action="../php/controlCuentaNueva.php" method="post">
+                    <section class="form-registerC">
+                        <h4>Nueva Cuenta</h4>
+                        
+                        <div id="columna1">
+                            <br>
+                            <br> 
+                            <div>
+                            Nombre
+                            <input class="controlsC" type="text" name="nombreU" placeholder="Nombre"  required>
+                            Apellido Paterno
+                            <input class="controlsC" type="text" name="apellidoP" placeholder="Apellido" required>
+                        
+                            Apellido Materno
+                            <input class="controlsC" type="text" name="apellidoM" placeholder="Apellido" required>
+                            <br>
+                            <label>Sexo</label>
+                            <select  name="codigogenero" class="input">
+                                <?php   
+                                    include '../php/genero.php';
+                                    $cur = new Genero();
+                                    $cur -> llenarGenero();
+                                    $cur -> cerrarBD();                      
+                                ?>
+                            </select> <br><br>
+                            Correo electronico
+                            <input class="controlsC" type="email" name="correo" placeholder="Ingrese su correo" required><br>
+                            
+                            Contraseña
+                            <input class="controlsC" type="password" name="clave" placeholder="Ingrese su contraseña" required><br>
+                            Telefono:
+                            <input class="controlsC" type="number" name="tel" placeholder="Ingrese su telefono" required><br>
+                            Direccion:
+                            <input class="controlsC" type="text" name="dir" placeholder="Ingrese su Direccion" required><br>
+                            </div>
+        
 
-        <main>
-          <!---Formulario para crear cuenta--->
-          <section class="form-register">
-            <form action="#">
-                <h4>Registrate</h4><br>     
-                Nombre   
-                <input class="controls" type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre"><br><br>
-                Apellido
-                <input class="controls" type="text" name="apellido"  id="apellido" placeholder="Ingrese Apellido"><br><br>
-                Email
-                <input class="controls" type="email" id="email" placeholder="Correo electronico"><br><br>
-                Password
-                <input class="controls" type="password" id="password" placeholder="Contraseña"><br><br>
-                <input class="botons" id="boton" type="submit" value="Registrar">
-           </section> 
-        </form>
+                            <input type='hidden' name= 'opcion' value= '1'>
+                            <input class="botonsC" id="boton" type="submit" value="Registrar">
+                                
+                    </div>
+                    </section> 
+                </form>
+                </div>
         </main>
         <br><br>
         <br><br>

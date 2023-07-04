@@ -1,4 +1,30 @@
+<?php
 
+session_start();
+
+if (isset($_POST['correo']) && isset($_POST['clave'])) {
+    $db = new mysqli('localhost', 'root', '', 'carcheap');
+
+    $stmt = $db->prepare('SELECT nombreU, adm FROM usuarios WHERE correo = ? AND clave = ?');
+    $stmt->bind_param('ss', $_POST['correo'], $_POST['clave']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $_SESSION['correo'] = $_POST['correo'];
+        $_SESSION['nombreU'] = $row['nombreU'];
+        if ($row['adm']) {
+            header('Location: ../html/Index_admin.php');
+        } else {
+            header('Location: ../html/Index_cliente.php');
+        }
+        exit;
+    } else {
+        // El correo electrónico o la contraseña son incorrectos
+        // Manejar este caso como desees
+    }
+}
+echo '
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,21 +32,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/estilos.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="img/car.jpg">
     <title>CARCHEAP</title>
-    <script src="../js/contador-inactividadAD.js"></script>
 </head>
 
 <body>
-    <body onload="reiniciarContadorInactividad()"></body>
         <!--Titulo Cabecera-->
         <section class="inicio" id="inicio">
             <header id="cabeceralogo">     
                 <div>       
                 <h1>CARCHEAP</h1>  
-                <h2>Conduce tus propios sueños</h2> 
+                <h2>Conduce tus propios sueños</h2> ';
+                echo'
                 </div>   
                 <nav>
                 <div class="Logo">
@@ -64,8 +89,13 @@
 
             <!---BANNER--->
             <section class="bienvenidos" id="bienvenidos"></section>
-            <div class="header">
-                <h1 class="titulo">Bienvenido Administrador</h1>
+            <div class="header">';
+            if (isset($_SESSION['nombreU'])): ?>
+                <p class="titulo">Bienvenido, <?= htmlspecialchars($_SESSION['nombreU']) ?>!</p>
+            <?php endif; 
+            echo'
+                
+                
             </div>
 
     <br>
@@ -102,13 +132,13 @@
                 </div>
                 <div class="social-media">
                     <a href="https://www.facebook.com/profile.php?id=100089353427427&mibextid=ZbWKwL" class="social-media-icon">
-                        <i class='bx bxl-facebook'></i>
+                        <i class="bx bxl-facebook"></i>
                     </a>
                     <a href="https://twitter.com/Carcheap1?t=9j6VuqGw5dPBdiTh4Q-pRg&s=09" class="social-media-icon">
-                        <i class='bx bxl-twitter'></i>
+                        <i class="bx bxl-twitter"></i>
                     </a>
                     <a href="https://instagram.com/carcheap_?igshid=ZDdkNTZiNTM="  class="social-media-icon">
-                       <i class='bx bxl-instagram' ></i>
+                       <i class="bx bxl-instagram" ></i>
                     </a>
                 </div>
                 <div class="line"></div>
@@ -116,4 +146,5 @@
         <script src="../js/menu.js"></script>
         <script src="../js/lightbox.js"></script>
 </body>
-</html>
+</html>';
+?>
